@@ -26,8 +26,8 @@ void draw() {
   mouse = MouseInfo.getPointerInfo().getLocation();
   screenshot();
   dither(screenshot, fac, level, 0, 0);
-  float posX = constrain(map(mouse.x, 0, 1920, 0, width), 0, width);
-  float posY = constrain(map(mouse.y, 0, 1080, 0, height), 0, height);
+  float posX = constrain(mouse.x, 0, width);
+  float posY = constrain(mouse.y, 0, height);
   dither(cursor, fac, level, posX, posY);
   drawGUI();
 }
