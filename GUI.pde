@@ -51,7 +51,7 @@ void controlEvent(ControlEvent theEvent) {
   // noiseSticking changed -> set new values
   if(theEvent.isController()) {
     if (theEvent.getController().getId() == 3) {
-      dither(screenshot, fac, level);  
+      dither(screenshot, fac, level, 0, 0);  
     }
   }
 }

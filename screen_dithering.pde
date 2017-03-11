@@ -9,12 +9,13 @@ ControlP5 controlP5;
 boolean showGUI = false;
 Slider[] sliders;
 
-PImage screenshot;
+PImage screenshot, cursor;
 int level = 1, count = 0;
 float num = 0, fac = 16;
 void setup() {
   //size(400, 400, JAVA2D);
   fullScreen();
+  cursor = loadImage("cursor.png");
   noStroke();
   noSmooth();
   setupGUI();
@@ -24,11 +25,10 @@ void draw() {
   Point mouse;
   mouse = MouseInfo.getPointerInfo().getLocation();
   screenshot();
-  dither(screenshot, fac, level);
+  dither(screenshot, fac, level, 0, 0);
   float posX = constrain(map(mouse.x, 0, 1920, 0, width), 0, width);
   float posY = constrain(map(mouse.y, 0, 1080, 0, height), 0, height);
-  fill(0);
-  rect(posX, posY, 10, 10);
+  dither(cursor, fac, level, posX, posY);
   drawGUI();
 }
 
@@ -59,7 +59,7 @@ void screenshot() {
 
 /// source image, blank image for black and white dither, 
 /// factor is a float that changes the amount of black of the image, and the structure of the dither
-void dither(PImage src1, float factor, int lev) {
+void dither(PImage src1, float factor, int lev, float posX, float posY) {
   int s = 1;
   //println(factor);
   ///create a copy of the original image///
@@ -96,7 +96,7 @@ void dither(PImage src1, float factor, int lev) {
   //src2.updatePixels();
   src.updatePixels();
   //image(src1, 0, 0);
-  image(src, 0, 0);
+  image(src, posX, posY);
 }
 
 /// find the nearest color, lev defines the number ///
