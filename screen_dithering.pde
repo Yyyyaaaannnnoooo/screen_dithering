@@ -3,9 +3,9 @@ import java.awt.Rectangle;
 import java.awt.AWTException;
 import controlP5.*;
 
-ControlP5 cp5;
+ControlP5 controlP5;
 boolean showGUI = false;
-Slider slider;
+Slider[] sliders;
 
 PImage img, screenshot;
 int level = 1, count = 0;
@@ -14,25 +14,24 @@ void setup() {
   size(400, 400, JAVA2D);
   noStroke();
   noSmooth();
-  cp5 = new ControlP5(this);
-  //ControlGroup ctrl = cp5.addGroup("menu", 15, 25, 35);
-  //ctrl.setColorLabel(color(255));
-  //ctrl.close();
-  cp5.addSlider("fac")
-    .setPosition(10, 10)
-    .setSize(200, 20)
-    .setRange(0.001, 20)
-    .setValue(16)
-    ;
+  img = loadImage("1.jpg");
+  setupGUI();
+  //cp5 = new ControlP5(this);
+  ////ControlGroup ctrl = cp5.addGroup("menu", 15, 25, 35);
+  ////ctrl.setColorLabel(color(255));
+  ////ctrl.close();
+  //cp5.addSlider("fac")
+  //  .setPosition(10, 10)
+  //  .setSize(200, 20)
+  //  .setRange(0.001, 20)
+  //  .setValue(16)
+  //  ;
 }
 
 void draw() {  
   screenshot();
-  //image(screenshot, 0, 0);
-  //println(fac);
-  img = screenshot;
-  //image(img, 0, 0);
-  dither(img, fac, level);
+  dither(screenshot, fac, level);
+  drawGUI();
 }
 
 void keyPressed() {
@@ -44,12 +43,12 @@ void keyPressed() {
     //background(0);
     //dither(img, img3, fac, level);
   }
-  //if (key=='m' || key=='M') {
-  //  showGUI = cp5.getGroup("menu").isOpen();
-  //  showGUI = !showGUI;
-  //}
-  //if (showGUI) cp5.getGroup("menu").open();
-  //else cp5.getGroup("menu").close();
+  if (key=='m' || key=='M') {
+    showGUI = controlP5.getGroup("menu").isOpen();
+    showGUI = !showGUI;
+  }
+  if (showGUI) controlP5.getGroup("menu").open();
+  else controlP5.getGroup("menu").close();
 }
 
 /// creates an image from your screen
@@ -101,7 +100,7 @@ void dither(PImage src1, float factor, int lev) {
   //src2.updatePixels();
   src.updatePixels();
   //image(src1, 0, 0);
-  image(src, 0, height);
+  image(src, 0, 0);
 }
 
 /// find the nearest color, lev defines the number ///
